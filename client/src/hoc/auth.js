@@ -9,7 +9,7 @@ export default function(ComposedClass, reload = null) {
     };
 
     componentWillMount() {
-      this.props.dispatch(auth());
+      this.props.auth();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -43,5 +43,14 @@ export default function(ComposedClass, reload = null) {
     };
   };
 
-  return connect(mapStateToProps)(AuthenticationCheck);
+  const mapDispatchToProps = dispatch => {
+    return {
+      auth: () => dispatch(auth())
+    };
+  };
+
+  return connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(AuthenticationCheck);
 }

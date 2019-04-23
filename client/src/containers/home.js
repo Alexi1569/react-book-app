@@ -6,7 +6,7 @@ import BookItem from './../widgets/bookItem';
 
 class HomeContainer extends Component {
   componentWillMount() {
-    this.props.dispatch(getBooks(1, 0, 'asc'));
+    this.props.getBooks(1, 0, 'asc');
   }
 
   renderItems = books => {
@@ -21,7 +21,7 @@ class HomeContainer extends Component {
 
   loadMore = () => {
     const count = this.props.books.list.length;
-    this.props.dispatch(getBooks(1, count, 'asc', this.props.books.list));
+    this.props.getBooks(1, count, 'asc', this.props.books.list);
   };
 
   render() {
@@ -42,4 +42,14 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(HomeContainer);
+const mapDispatchToProps = dispatch => {
+  return {
+    getBooks: (limit, start, order, list) =>
+      dispatch(getBooks(limit, start, order, list))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeContainer);

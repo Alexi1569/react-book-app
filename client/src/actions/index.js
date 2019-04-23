@@ -65,3 +65,47 @@ export const auth = () => {
     payload: response
   };
 };
+
+export const addBook = data => {
+  const response = axios.post(`/api/book`, data).then(res => res.data);
+
+  return {
+    type: 'ADD_BOOK',
+    payload: response
+  };
+};
+
+export const clearNewBook = () => {
+  return {
+    type: 'CLEAR_NEW_BOOK'
+  };
+};
+
+export const getUserPosts = id => {
+  const response = axios.get(`/api/reviews/${id}`).then(res => res.data);
+
+  return {
+    type: 'GET_USER_POSTS',
+    payload: response
+  };
+};
+
+export const getBook = id => {
+  const response = axios.get(`/api/book/${id}`).then(res => res.data);
+
+  return {
+    type: 'GET_BOOK',
+    payload: response
+  };
+};
+
+export const updateBook = book => {
+  const response = axios
+    .post(`/api/book/${book._id}`, book)
+    .then(res => res.data);
+
+  return {
+    type: 'UPDATE_BOOK',
+    payload: response
+  };
+};

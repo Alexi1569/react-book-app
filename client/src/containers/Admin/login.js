@@ -14,7 +14,7 @@ class Login extends Component {
     e.preventDefault();
     const { email, password } = this.state;
 
-    this.props.dispatch(loginUser(email, password));
+    this.props.loginUser(email, password);
   };
 
   handleInput = e => {
@@ -55,7 +55,7 @@ class Login extends Component {
               onChange={this.handleInput}
             />
           </div>
-          <button type="submit">Login</button>
+          <button>Login</button>
           <div className="error">
             {user.login ? <div>{user.login.message}</div> : null}
           </div>
@@ -66,10 +66,18 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     user: state.userReducer
   };
 };
 
-export default connect(mapStateToProps)(Login);
+const mapDispatchToProps = dispatch => {
+  return {
+    loginUser: (email, password) => dispatch(loginUser(email, password))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);

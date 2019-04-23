@@ -10,6 +10,11 @@ export default (state = {}, action) => {
         ...state,
         auth: action.payload
       };
+    case 'GET_USER_POSTS':
+      return {
+        ...state,
+        posts: action.payload
+      };
     default:
       return state;
   }

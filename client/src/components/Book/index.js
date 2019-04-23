@@ -5,11 +5,11 @@ import { getBookWithReviewer, clearBookWithReviewer } from './../../actions';
 
 class BookView extends Component {
   componentWillMount() {
-    this.props.dispatch(getBookWithReviewer(this.props.match.params.id));
+    this.props.getBookWithReviewer(this.props.match.params.id);
   }
 
   componentWillUnmount() {
-    this.props.dispatch(clearBookWithReviewer());
+    this.props.clearBookWithReviewer();
   }
 
   renderBook = (book, reviewer) => {
@@ -54,4 +54,14 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(BookView);
+const mapDispatchToProps = dispatch => {
+  return {
+    clearBookWithReviewer: () => dispatch(clearBookWithReviewer()),
+    getBookWithReviewer: id => dispatch(getBookWithReviewer(id))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BookView);
