@@ -26,8 +26,13 @@ class EditBook extends PureComponent {
     this.props.getBook(this.props.match.params.id);
   }
 
+  componentWillUnmount() {
+    this.props.clearBook();
+  }
+
   componentWillReceiveProps(nextProps) {
     const { book } = nextProps.books;
+
     const formData = {
       _id: book._id,
       name: book.name,
@@ -52,9 +57,32 @@ class EditBook extends PureComponent {
     });
   };
 
+  deleteBook = id => {
+    this.props.deleteBook(id);
+  };
+
+  redirectUser = () => {
+    setTimeout(() => {
+      this.props.history.push('/user/reviews');
+    }, 1000);
+  };
+
   render() {
+    const { books } = this.props;
+
     return (
       <div className="rl_container article">
+        {books.isBookUpdated ? (
+          <div className="edit_confirm">
+            Post Updated, <br />
+            <Link to={`/book/${books.book._id}`}>
+              Click here to see your post
+            </Link>
+          </div>
+        ) : null}
+        {books.isDeleted ? (
+          <div className="red_tag">Post Deleted {this.redirectUser()}</div>
+        ) : null}
         <form onSubmit={this.submitForm}>
           <h2>Edit book</h2>
           <div className="form_element">
@@ -114,7 +142,12 @@ class EditBook extends PureComponent {
           </div>
           <button>Send</button>
           <div className="delete_post">
-            <div className="button">Delete Book</div>
+            <div
+              className="button"
+              onClick={() => this.deleteBook(books.book._id)}
+            >
+              Delete Book
+            </div>
           </div>
         </form>
       </div>
@@ -131,7 +164,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getBook: id => dispatch(getBook(id)),
-    updateBook: data => dispatch(updateBook(data))
+    updateBook: data => dispatch(updateBook(data)),
+    deleteBook: id => dispatch(deleteBook(id)),
+    clearBook: () => dispatch(clearBook())
   };
 };
 

@@ -13,7 +13,7 @@ class BookView extends Component {
   }
 
   renderBook = (book, reviewer) => {
-    return book ? (
+    return book && reviewer ? (
       <div className="br_container">
         <div className="br_header">
           <h2>{book.name}</h2>
@@ -42,6 +42,7 @@ class BookView extends Component {
   };
 
   render() {
+    console.log(this.props);
     const { book, reviewer } = this.props.books;
 
     return <div>{this.renderBook(book, reviewer)}</div>;
