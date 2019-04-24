@@ -10,7 +10,7 @@
     "client": "npm run start --prefix client",
     "client-build": "npm run build --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "concurrently \"npm run client-build\" \"npm run server\" \"npm run client\""
+    "build": "concurrently \"npm run client-build\""
   },
   "engines": {
     "node": "10.13.0"
